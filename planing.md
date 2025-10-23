@@ -63,7 +63,7 @@
  - [x] Create initial init.py files
  - [x] Set up .gitignore file
  - [x] Create basic README.md
- - [ ] Add MIT LICENSE file
+ - [X] Add MIT LICENSE file
 
  ### Step 2: Core Types and Exceptions
  - [ ] Implement types.py with all type definitions
