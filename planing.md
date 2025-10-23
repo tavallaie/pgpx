@@ -1,444 +1,213 @@
-# PGPX Development Checklist
 
-## 📋 **Features**
-
-### **1. Core Features**
-
- Connection Pooling using `psycopg3`
-
- Configuration Management via environment variables, config files, and programmatic settings
-
- Connection Lifecycle Management (initialization, termination, error handling)
-
- Support for Asynchronous Connections with `asyncio`
-
- Flexible Configuration Sources and Formats
-
- Environment Management for different environments (development, testing, production)
-
- Secure Secrets Management Integration (e.g., Vault, AWS Secrets Manager)
-
- Built-in Logging with Python’s logging module and `loguru`
-
- Query Logging for monitoring and debugging
-
- Metrics Integration with monitoring tools (e.g., Prometheus)
-
----
-
-### **2. ORM (Object-Relational Mapping) Features**
-
- Declarative Model Definitions using `pydantic` with type annotations
-
- Support for Various Field Types, Validations, Default Values, and Aliases
-
- Inheritance and Mixins for Model Reusability
-
- Automatic Schema Generation from Model Definitions
-
- Migrations Management with Versioning and Rollback
-
- Schema Synchronization with Existing Database Schemas
-
- CRUD Operations (Create, Read, Update, Delete) on Models
-
- Bulk Operations for Insertions, Updates, and Deletions
-
- Soft Deletes to Preserve Data Integrity
-
- Fluent Query Builder with Pythonic API
-
- Raw SQL Support for executing custom queries
-
- Parameterized Queries for SQL Injection Protection
-
- Relationship Management (one-to-one, one-to-many, many-to-many)
-
- Lazy and Eager Loading for Related Data
-
- Data Validation and Type Checking with `pydantic`
-
- Serialization/Deserialization to/from JSON or Other Formats
-
----
-
-### **3. Table Management**
-
- CRUD Operations on Tables (Create, Drop)
-
- Schema Alterations (Add/Remove Columns, Change Data Types)
-
- Index Management for Query Performance Optimization
-
- Constraints Management (Primary Keys, Foreign Keys, Unique Constraints, Check Constraints)
-
- Triggers and Stored Procedures Management
-
----
-
-### **4. Extension Management**
-
- Extension Registry and Plugin System with Centralized Management
-
- Dynamic Plugin Loading via Configuration or Programmatic Registration
-
- Consistent API for All Extensions
-
- Prebuilt Plugins for Popular Extensions (e.g., `pgvector`, `pg_trgm`, `PostGIS`, `pg_partman`, `pg_bigm`)
-
- Custom Extension Support for User-Defined Plugins
-
- Standardized Configuration Interface for Extensions
-
- Version Management and Compatibility Handling for Extensions
-
----
-
-### **5. CLI Features**
-
- Initialization Command (`pgpx init`) for Project Setup
-
- Migration Management Commands (`pgpx migrate`, `pgpx migrate create`, `pgpx migrate apply`, `pgpx migrate rollback`)
-
- Extension Management Commands (`pgpx extension install`, `pgpx extension uninstall`, `pgpx extension list`)
-
- Model Generation Command (`pgpx model create`)
-
- Database Operations Commands (Seeding Data, Running Raw Queries, Exporting Schemas)
-
- Interactive Mode for REPL-like Command Execution
-
- Configuration Wizards with Guided Prompts
-
- Logging Control Flags for Adjusting Verbosity and Output Formats
-
- Script Integration for Deployment Scripts or CI/CD Pipelines
-
- Comprehensive Help Commands (`pgpx help`, `pgpx <command> --help`)
-
- Command Autocompletion Support
-
----
-
-### **6. Integration Features**
-
- Compatibility with Major Python Web Frameworks (Django, FastAPI, Flask, Pyramid, Bottle, etc.)
-
- Middleware and Hooks for Request Lifecycle and Database Operation Events
-
- Dependency Injection Support for Database Connections and Repositories
-
- Context Management for Transactional Contexts within Web Requests
-
----
-
-### **7. Utilities**
-
- Advanced Query Builders Supporting Joins, Subqueries, Aggregates, and Window Functions
-
- Batch Query Execution within Transactions
-
- Database Migration Tools with Version Control and Rollback Mechanism
-
- Data Import/Export Tools for CSV, JSON, etc.
-
- Schema Visualization for Documentation
-
- Performance Optimization Tools for Query and Schema Analysis
-
----
-
-### **8. Testing Features**
-
- Test Fixtures for Setting Up and Tearing Down Test Databases
-
- Mocking Tools for Database Connections and Operations
-
- Integration Testing Support with Real or In-Memory Databases
-
- Continuous Integration Support for Automated Testing and Deployment
-
----
-
-### **9. Documentation and Examples**
-
- Comprehensive Documentation with Getting Started Guides, API References, and Best Practices
-
- Sample Projects Demonstrating Usage with Different Web Frameworks
-
- Code Snippets for Common Tasks and Operations
-
- Project Templates for Scaffolding New Projects
-
- Community Resources (FAQ, Troubleshooting, Contribution Guidelines, Changelog)
-
----
-
-### **10. Security Features**
-
- SQL Injection Protection with Parameterized Queries
-
- Input Validation with `pydantic` 
-
- Role-Based Access Control (RBAC) for User and Permission Management
-
- Data Encryption Support for Sensitive Data at Rest and in Transit
-
- Secure Connection Options with SSL/TLS
-
----
-
-### **11. Performance Optimization**
-
- Efficient Query Execution with Lazy Loading
-
- Caching Mechanisms for Frequently Accessed Data
-
- Automated Index Suggestions Based on Query Patterns
-
- Index Maintenance Tools for Rebuilding or Reindexing Tables
-
- Performance Metrics Tracking and Reporting
-
- Benchmark Tools for Performance Comparison
-
----
-
-### **12. Extensibility and Pluggability**
-
- Modular Architecture with Separation of Concerns
-
- Loose Coupling through Well-Defined Interfaces
-
- Extension APIs for Developing Custom Extensions
-
- Documentation and Guides for Plugin Development
-
- Dynamic Extension Loading at Runtime
-
- Configuration-Based Extension Activation
-
----
-
-### **13. Internationalization and Localization**
-
- Multi-Language Support for Error Messages and Logs
-
- Documentation Available in Multiple Languages
-
- Locale-Aware Operations for Date, Time, Number, and Currency Formatting
-
----
-
-### **14. Compatibility and Standards Compliance**
-
- Support for Multiple Python Versions (e.g., 3.8 and Above)
-
- Backward Compatibility with Older PostgreSQL Versions
-
- Adherence to Python Enhancement Proposals (PEPs) for Coding Standards
-
- Compliance with SQL Standards for Portability and Compatibility
-
----
-
-### **15. Deployment and Distribution**
-
- PyPI Distribution with Proper Versioning
-
- Clear Dependency Management to Prevent Conflicts
-
- Automated Testing in CI Pipelines
-
- Automated Release Workflows upon Successful Builds and Tests
-
- Wheel Files for Pre-Built Binary Distribution
-
----
-
-### **16. Community and Support**
-
- Forums and Discussion Boards for User Engagement
-
- Social Media Presence on GitHub, Discord, Slack, etc.
-
- Issue Tracking for Bug Reporting and Feature Requests
-
- Direct Support Channels (Email, Chat)
-
- Open Source Collaboration Encouragement through Pull Requests
-
- Recognition and Rewards for Contributors
-
----
-
-### **17. Additional Advanced Features**
-
- Event Sourcing and Change Data Capture with Event Hooks
-
- Integration with Messaging Systems like Kafka or RabbitMQ
-
- GraphQL Support with Seamless API Integration
-
- Multi-Tenancy Support with Tenant Isolation and Configuration
-
----
-
-## 🚀 **Phases**
-
-### **Phase 1: Core Infrastructure**
-
- Implement Connection and Configuration Management
-
- Develop Basic ORM Layer with Model Definitions and CRUD Operations
-
- Set Up Logging with `loguru`
-
- Create Basic CLI Commands with `click`
-
- Write Unit Tests for Core Functionalities
-
- Set Up Docker for PostgreSQL Development Environment
-
----
-
-### **Phase 2: Extension and Plugin System**
-
- Develop Extension Registry and Plugin Interfaces
-
- Create Prebuilt Plugins for Popular PostgreSQL Extensions (e.g., `pgvector`)
-
- Implement Dynamic Plugin Loading Mechanism
-
- Ensure Consistent API for All Extensions
-
- Provide Documentation for Plugin Development
-
----
-
-### **Phase 3: Advanced ORM and Table Management**
-
- Enhance ORM with Relationship Management (One-to-One, One-to-Many, Many-to-Many)
-
- Implement Comprehensive Migration Tools with Versioning and Rollback
-
- Develop Schema Synchronization Features
-
- Add Advanced Table Management (Constraints, Indexes, Triggers)
-
- Optimize CRUD Operations for Performance
-
----
-
-### **Phase 4: Integration and Utilities**
-
- Integrate PGPX with Major Python Web Frameworks (Django, FastAPI, Flask, etc.)
-
- Develop Advanced Query Builders Supporting Complex Queries
-
- Implement Data Import/Export Utilities
-
- Create Schema Visualization Tools
-
- Develop Performance Optimization Utilities
-
----
-
-### **Phase 5: CLI Enhancements and Testing**
-
- Expand CLI with Additional Commands and Interactive Features
-
- Implement Interactive Shell for REPL-like Operations
-
- Enhance Configuration Wizards for User-Friendly Setup
-
- Develop Comprehensive Testing Utilities and Fixtures
-
- Integrate Continuous Integration Pipelines for Automated Testing
-
----
-
-### **Phase 6: Documentation and Community Building**
-
- Develop Thorough Documentation with Guides, API References, and Examples
-
- Create Sample Projects Demonstrating PGPX Usage
-
- Establish Community Engagement Platforms (Forums, Discord, etc.)
-
- Implement Contribution Guidelines and Onboarding Processes
-
- Maintain Changelog and Release Notes for Transparency
-
----
-
-### **Phase 7: Advanced Features and Optimization**
-
- Add Security Features like RBAC and Data Encryption
-
- Implement Caching Mechanisms for Performance Boost
-
- Develop Automated Index Suggestion and Maintenance Tools
-
- Enhance Internationalization and Localization Support
-
- Optimize Deployment Processes with CI/CD Enhancements
-
- Continuously Refine and Enhance Based on User Feedback and Technological Advancements
-
----
-
-# ✅ **Completion Checklist**
-
-- [ ] **Phase 1: Core Infrastructure**
-  - [ ] Implement Connection and Configuration Management
-  - [ ] Develop Basic ORM Layer with Model Definitions and CRUD Operations
-  - [ ] Set Up Logging with `loguru`
-  - [ ] Create Basic CLI Commands with `click`
-  - [ ] Write Unit Tests for Core Functionalities
-  - [ ] Set Up Docker for PostgreSQL Development Environment
-
-- [ ] **Phase 2: Extension and Plugin System**
-  - [ ] Develop Extension Registry and Plugin Interfaces
-  - [ ] Create Prebuilt Plugins for Popular PostgreSQL Extensions (e.g., `pgvector`)
-  - [ ] Implement Dynamic Plugin Loading Mechanism
-  - [ ] Ensure Consistent API for All Extensions
-  - [ ] Provide Documentation for Plugin Development
-
-- [ ] **Phase 3: Advanced ORM and Table Management**
-  - [ ] Enhance ORM with Relationship Management (One-to-One, One-to-Many, Many-to-Many)
-  - [ ] Implement Comprehensive Migration Tools with Versioning and Rollback
-  - [ ] Develop Schema Synchronization Features
-  - [ ] Add Advanced Table Management (Constraints, Indexes, Triggers)
-  - [ ] Optimize CRUD Operations for Performance
-
-- [ ] **Phase 4: Integration and Utilities**
-  - [ ] Integrate PGPX with Major Python Web Frameworks (Django, FastAPI, Flask, etc.)
-  - [ ] Develop Advanced Query Builders Supporting Complex Queries
-  - [ ] Implement Data Import/Export Utilities
-  - [ ] Create Schema Visualization Tools
-  - [ ] Develop Performance Optimization Utilities
-
-- [ ] **Phase 5: CLI Enhancements and Testing**
-  - [ ] Expand CLI with Additional Commands and Interactive Features
-  - [ ] Implement Interactive Shell for REPL-like Operations
-  - [ ] Develop Configuration Wizards for User-Friendly Setup
-  - [ ] Develop Comprehensive Testing Utilities and Fixtures
-  - [ ] Integrate Continuous Integration Pipelines for Automated Testing
-
-- [ ] **Phase 6: Documentation and Community Building**
-  - [ ] Develop Thorough Documentation with Guides, API References, and Examples
-  - [ ] Create Sample Projects Demonstrating PGPX Usage
-  - [ ] Establish Community Engagement Platforms (Forums, Discord, etc.)
-  - [ ] Implement Contribution Guidelines and Onboarding Processes
-  - [ ] Maintain Changelog and Release Notes for Transparency
-
-- [ ] **Phase 7: Advanced Features and Optimization**
-  - [ ] Add Security Features like RBAC and Data Encryption
-  - [ ] Implement Caching Mechanisms for Performance Boost
-  - [ ] Develop Automated Index Suggestion and Maintenance Tools
-  - [ ] Enhance Internationalization and Localization Support
-  - [ ] Optimize Deployment Processes with CI/CD Enhancements
-  - [ ] Continuously Refine and Enhance Based on User Feedback and Technological Advancements
-
----
+ Plan for pgpx (PostgreSQL Python Extended) Library
+
+ ## Project Overview
+ pgpx is a modern, type-safe, Pythonic PostgreSQL library with advanced features like connection pooling, transaction management, migrations, relationships, and async support.
+
+ ## Project Structure
+ ```
+  pgpx/
+    ├── pyproject.toml # Project configuration using uv  
+    ├── README.md # Project documentation  
+    ├── LICENSE # MIT License  
+    ├── .gitignore # Git ignore file  
+    ├── src/  
+    │ └── pgpx/  
+    │   ├── __init__.py # Main exports  
+    │   ├── connection.py # Database connection management  
+    │   ├── pool.py # Connection pooling  
+    │   ├── transaction.py # Transaction management  
+    │   ├── schema.py # Schema definition and validation  
+    │   ├── query.py # Query execution  
+    │   ├── query_builder.py # Advanced query builder  
+    │   ├── orm.py # High-level ORM wrapper  
+    │   ├── relationships.py # Model relationships  
+    │   ├── migration.py # Migration system  
+    │   ├── async_db.py # Async support  
+    │   ├── operations.py # CRUD operations  
+    │   ├── exceptions.py # Custom exceptions  
+    │   ├── types.py # Type definitions  
+    │   └── extensions/  
+    │     ├── __init__.py # Extension registry  
+    │     ├── base.py # Base extension class  
+    │     ├── postgis.py # PostGIS extension  
+    │     └── pgcrypto.py # PGCrypto extension  
+    └── tests/  
+      ├── __init__.py  
+      ├── test_connection.py  
+      ├── test_pool.py  
+      ├── test_transaction.py  
+      ├── test_schema.py  
+      ├── test_query.py  
+      ├── test_query_builder.py  
+      ├── test_orm.py  
+      ├── test_relationships.py  
+      ├── test_migration.py  
+      ├── test_async_db.py  
+      ├── test_operations.py  
+      ├── test_exceptions.py  
+      ├── test_types.py  
+      └── test_extensions/  
+        ├── __init__.py  
+        ├── test_base.py  
+        ├── test_postgis.py  
+        └── test_pgcrypto.py 
+  ```
+
+ ## Step-by-Step Implementation Plan
+
+ ### Step 1: Project Setup
+ - [x] Create project directory structure
+ - [x] Initialize uv project with uv init pgpx
+ - [x] Set up pyproject.toml with dependencies
+ - [x] Create initial init.py files
+ - [x] Set up .gitignore file
+ - [x] Create basic README.md
+ - [X] Add MIT LICENSE file
+
+ ### Step 2: Core Types and Exceptions
+ - [ ] Implement types.py with all type definitions
+ - [ ] Implement exceptions.py with custom exception classes
+ - [ ] Create test_types.py with comprehensive type tests
+ - [ ] Create test_exceptions.py with exception tests
+
+ ### Step 3: Connection Management
+ - [ ] Implement connection.py with DatabaseConnection class
+ - [ ] Implement DatabaseClient class for persistent connections
+ - [ ] Create test_connection.py with connection tests
+ - [ ] Test connection establishment and cleanup
+ - [ ] Test context manager functionality
+
+ ### Step 4: Connection Pooling
+ - [ ] Implement pool.py with ConnectionPool class
+ - [ ] Implement PooledDatabaseConnection class
+ - [ ] Create test_pool.py with pooling tests
+ - [ ] Test pool creation, connection acquisition, and cleanup
+ - [ ] Test pool configuration options
+
+ ### Step 5: Transaction Management
+ - [ ] Implement transaction.py with Transaction class
+ - [ ] Implement TransactionManager class
+ - [ ] Implement isolation levels and savepoints
+ - [ ] Create test_transaction.py with transaction tests
+ - [ ] Test transaction commit, rollback, and savepoints
+
+ ### Step 6: Schema Management
+ - [ ] Implement schema.py with SchemaManager class
+ - [ ] Implement db_field function with improved foreign key support
+ - [ ] Create test_schema.py with schema tests
+ - [ ] Test table creation, validation, and migration
+
+ ### Step 7: Query Execution
+ - [ ] Implement query.py with QueryExecutor class
+ - [ ] Implement basic query building methods
+ - [ ] Create test_query.py with query execution tests
+ - [ ] Test parameterized queries and result handling
+
+ ### Step 8: Advanced Query Builder
+ - [ ] Implement query_builder.py with QueryBuilder class
+ - [ ] Implement Pythonic methods for conditions
+ - [ ] Create test_query_builder.py with query builder tests
+ - [ ] Test complex query construction with joins, conditions, and ordering
+
+ ### Step 9: High-Level ORM Wrapper
+ - [ ] Implement orm.py with select, insert, update, delete functions
+ - [ ] Implement FieldExpression, ComparisonExpression classes
+ - [ ] Create test_orm.py with ORM tests
+ - [ ] Test fluent interface and type safety
+
+ ### Step 10: Relationship Management
+ - [ ] Implement relationships.py with RelationshipManager class
+ - [ ] Implement relationship function and relationship types
+ - [ ] Create test_relationships.py with relationship tests
+ - [ ] Test one-to-one, one-to-many, and many-to-many relationships
+
+ ### Step 11: Migration System
+ - [ ] Implement migration.py with migration classes
+ - [ ] Implement transactional migration support
+ - [ ] Create test_migration.py with migration tests
+ - [ ] Test migration creation, execution, and rollback
+
+ ### Step 12: CRUD Operations
+ - [ ] Implement operations.py with DataclassOperations class
+ - [ ] Implement bulk operations and relationship handling
+ - [ ] Create test_operations.py with operations tests
+ - [ ] Test insert, update, delete, and select operations
+
+ ### Step 13: Async Support
+ - [ ] Implement async_db.py with async classes
+ - [ ] Implement async transaction support
+ - [ ] Create test_async_db.py with async tests
+ - [ ] Test async connection, queries, and transactions
+
+ ### Step 14: Extension System
+ - [ ] Implement extensions/base.py with BaseExtension class
+ - [ ] Implement extensions/init.py with ExtensionRegistry
+ - [ ] Create test_extensions/test_base.py with base extension tests
+ - [ ] Test extension registration and validation
+
+ ### Step 15: PostGIS Extension
+ - [ ] Implement extensions/postgis.py with PostGISExtension class
+ - [ ] Create test_extensions/test_postgis.py with PostGIS tests
+ - [ ] Test PostGIS functions and geometry operations
+
+ ### Step 16: PGCrypto Extension
+ - [ ] Implement extensions/pgcrypto.py with PGCryptoExtension class
+ - [ ] Create test_extensions/test_pgcrypto.py with PGCrypto tests
+ - [ ] Test cryptographic functions and operations
+
+ ### Step 17: Main Module Integration
+ - [ ] Implement init.py with main DataclassDB class
+ - [ ] Integrate all modules into a cohesive interface
+ - [ ] Create comprehensive integration tests
+ - [ ] Test end-to-end workflows
+
+ ### Step 18: Documentation
+ - [ ] Create comprehensive API documentation
+ - [ ] Add usage examples to README.md
+ - [ ] Create tutorials and guides
+ - [ ] Set up documentation generation
+
+ ### Step 19: Performance Optimization
+ - [ ] Profile and optimize critical paths
+ - [ ] Implement connection pooling optimizations
+ - [ ] Add performance benchmarks
+ - [ ] Create performance tests
+
+ ### Step 20: Release Preparation
+ - [ ] Ensure all tests pass with high coverage
+ - [ ] Finalize documentation
+ - [ ] Prepare release notes
+ - [ ] Set up CI/CD pipeline
+ - [ ] Publish to PyPI
+
+ ## Testing Strategy
+ - [ ] Use Python's native unittest framework
+ - [ ] Aim for 90%+ code coverage
+ - [ ] Include unit tests for each module
+ - [ ] Include integration tests for workflows
+ - [ ] Include performance benchmarks
+ - [ ] Test both sync and async functionality
+
+ ## Dependencies
+ - [ ] psycopg (PostgreSQL adapter)
+ - [ ] typing-extensions (for type hints)
+ - [ ] uv (package manager)
+ - [ ] pytest (for additional testing)
+ - [ ] pytest-asyncio (for async testing)
+ - [ ] pytest-cov (for coverage reporting)
+
+ ## Development Workflow
+ 1. Create feature branch from main
+ 2. Implement module with tests
+ 3. Ensure all tests pass
+ 4. Update documentation
+ 5. Submit pull request
+ 6. Code review and merge
+ 7. Tag release if needed
+
+ ## Release Schedule
+ - [ ] v0.1.0: Core functionality (connection, query, basic ORM)
+ - [ ] v0.2.0: Advanced features (relationships, migrations)
+ - [ ] v0.3.0: Extensions and async support
+ - [ ] v1.0.0: Stable release with full feature set
