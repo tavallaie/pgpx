@@ -5,7 +5,8 @@
  pgpx is a modern, type-safe, Pythonic PostgreSQL library with advanced features like connection pooling, transaction management, migrations, relationships, and async support.
 
  ## Project Structure
- pgpx/
+ ```
+  pgpx/
     ├── pyproject.toml # Project configuration using uv  
     ├── README.md # Project documentation  
     ├── LICENSE # MIT License  
@@ -51,6 +52,7 @@
         ├── test_base.py  
         ├── test_postgis.py  
         └── test_pgcrypto.py 
+  ```
 
  ## Step-by-Step Implementation Plan
 
@@ -60,7 +62,7 @@
  - [x] Set up pyproject.toml with dependencies
  - [x] Create initial init.py files
  - [x] Set up .gitignore file
- - [x] Create basic README.md
+ - [ [x] Create basic README.md
  - [ ] Add MIT LICENSE file
 
  ### Step 2: Core Types and Exceptions
