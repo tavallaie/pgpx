@@ -7,7 +7,9 @@ authors = [
     { name = "Ali Tavallaie", email = "a.tavallaie@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "psycopg[binary,pool]>=3.2.11",
+]
 
 [project.scripts]
 pgpx = "pgpx:main"
