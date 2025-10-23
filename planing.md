@@ -62,7 +62,7 @@
  - [x] Set up pyproject.toml with dependencies
  - [x] Create initial init.py files
  - [x] Set up .gitignore file
- - [ [x] Create basic README.md
+ - [x] Create basic README.md
  - [ ] Add MIT LICENSE file
 
  ### Step 2: Core Types and Exceptions
