@@ -5,7 +5,7 @@
  pgpx is a modern, type-safe, Pythonic PostgreSQL library with advanced features like connection pooling, transaction management, migrations, relationships, and async support.
 
  ## Project Structure
-  pgpx/
+ pgpx/
     ├── pyproject.toml # Project configuration using uv  
     ├── README.md # Project documentation  
     ├── LICENSE # MIT License  
