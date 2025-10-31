@@ -18,5 +18,6 @@ run-pgpx-postgres:
 	docker run -d --name pgpx-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:17
 
 test: clear-postgres run-pgpx-postgres
-	sleep 10  # Give PostgreSQL time to start
+	@echo "Waiting for PostgreSQL to be ready..."
+	@until docker exec pgpx-postgres pg_isready -U postgres > /dev/null 2>&1; do sleep 1; done
 	uv run python -m unittest discover tests
