@@ -284,18 +284,18 @@ class TestDatabaseClientMocked(unittest.TestCase):
             mock_connect.assert_called_once()
 
     @patch("src.pgpx.connection.DatabaseConnection.connect")
-    def test_context_manager_no_disconnect(self, mock_connect):
+    @patch("src.pgpx.connection.DatabaseConnection")
+    def test_context_manager_no_disconnect(self, MockDatabaseConnection):
         """Test context manager doesn't disconnect on exit."""
+        mock_instance = MockDatabaseConnection.return_value
         client = DatabaseClient(self.connection_params, auto_connect=False)
 
         with client:
             pass  # Do nothing
 
         # connect should be called but disconnect should not
-        mock_connect.assert_called_once()
-        # We can't easily verify disconnect wasn't called without mocking
-        # the connection object, but the implementation should not call it
-
+        mock_instance.connect.assert_called_once()
+        mock_instance.disconnect.assert_not_called()
     def test_repr(self):
         """Test string representation."""
         client = DatabaseClient(self.connection_params, auto_connect=False)
