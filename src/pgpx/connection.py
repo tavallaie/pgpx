@@ -61,7 +61,7 @@ class DatabaseConnection:
         if self._connection:
             try:
                 self._connection.close()
-            except Exception as e:
+            except psycopg.Error as e:
                 logger.warning(f"Error closing connection: {e}")
             finally:
                 self._connection = None
