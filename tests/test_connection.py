@@ -11,6 +11,7 @@ from unittest.mock import MagicMock, patch
 
 from src.pgpx.connection import DatabaseConnection, DatabaseClient
 from src.pgpx.exceptions import ConnectionError
+import psycopg
 
 
 def get_test_connection_params():
@@ -84,7 +85,7 @@ class TestDatabaseConnectionMocked(unittest.TestCase):
     @patch("src.pgpx.connection.psycopg.connect")
     def test_connect_failure(self, mock_connect):
         """Test connection establishment failure."""
-        mock_connect.side_effect = Exception("Connection failed")
+        mock_connect.side_effect = psycopg.Error("Connection failed")
 
         conn = DatabaseConnection(self.connection_params)
 
