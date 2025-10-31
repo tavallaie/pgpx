@@ -45,12 +45,11 @@ class TestDatabaseConnectionMocked(unittest.TestCase):
         config_mock = MagicMock()
         config_mock.to_dict.return_value = self.connection_params
 
-        conn = DatabaseConnection(config_mock)
+        conn = DatabaseConnection({})  # Use dummy params for init
         normalized = conn._normalize_params(config_mock)
 
         self.assertEqual(normalized, self.connection_params)
-        # to_dict is called in __init__ and in _normalize_params
-        self.assertEqual(config_mock.to_dict.call_count, 2)
+        config_mock.to_dict.assert_called_once()
 
     def test_normalize_params_invalid(self):
         """Test parameter normalization with invalid input."""
