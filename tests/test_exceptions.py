@@ -121,7 +121,7 @@ class TestPrimaryKeyError(unittest.TestCase):
     def test_primary_key_error_instantiation(self):
         """
         Verify PrimaryKeyError instantiates and preserves the provided message.
-        
+
         Asserts that the exception's string representation equals the message passed at construction.
         """
         from src.pgpx.exceptions import PrimaryKeyError
