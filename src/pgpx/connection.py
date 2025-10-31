@@ -52,7 +52,7 @@ class DatabaseConnection:
         """
         try:
             self._connection = psycopg.connect(**self.connection_params)
-        except Exception as e:
+        except psycopg.Error as e:
             raise ConnectionError(f"Failed to connect to database: {e}") from e
         return self
 
