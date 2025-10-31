@@ -132,7 +132,7 @@ class QueryResult:
     def __init__(self, data: List[Dict], affected_rows: int = 0):
         """
         Initialize a QueryResult with result rows and an optional affected-row count.
-        
+
         Parameters:
             data (List[Dict]): List of row dictionaries returned from a query.
             affected_rows (int): Number of rows affected by the operation (defaults to 0).
@@ -143,7 +143,7 @@ class QueryResult:
     def __bool__(self) -> bool:
         """
         Indicates whether the QueryResult contains any rows.
-        
+
         Returns:
             `true` if the result contains at least one row, `false` otherwise.
         """
@@ -152,7 +152,7 @@ class QueryResult:
     def __len__(self) -> int:
         """
         Number of rows in the QueryResult.
-        
+
         Returns:
             int: The number of rows in the result data.
         """
@@ -161,7 +161,7 @@ class QueryResult:
     def first(self) -> Optional[Dict]:
         """
         Get the first row from the result set.
-        
+
         Returns:
             row (Optional[Dict]): The first row as a dict, or None if no rows are available.
         """
@@ -170,7 +170,7 @@ class QueryResult:
     def last(self) -> Optional[Dict]:
         """
         Get the last row from the result set.
-        
+
         Returns:
             last_row (dict | None): The last row dictionary if available, otherwise `None`.
         """
@@ -187,7 +187,7 @@ class ForeignKeyReference:
     def __str__(self) -> str:
         """
         Return the dotted foreign key reference in the form "modelname.field".
-        
+
         Returns:
             str: The reference formatted as "<model_name_lower>.<field>".
         """
