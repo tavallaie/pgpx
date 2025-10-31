@@ -49,9 +49,9 @@ class DatabaseConnection:
         """
         try:
             self._connection = psycopg.connect(**self.connection_params)
-            return self
-        except psycopg.Error as e:
-            raise ConnectionError(f"Failed to connect to database: {e}")
+        except Exception as e:
+            raise ConnectionError(f"Failed to connect to database: {e}") from e
+        return self
 
     def disconnect(self) -> None:
         """Close database connection if it exists."""
