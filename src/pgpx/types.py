@@ -130,23 +130,50 @@ class QueryResult:
     """Container for query results with metadata."""
 
     def __init__(self, data: List[Dict], affected_rows: int = 0):
+        """
+        Initialize a QueryResult with result rows and an optional affected-row count.
+        
+        Parameters:
+            data (List[Dict]): List of row dictionaries returned from a query.
+            affected_rows (int): Number of rows affected by the operation (defaults to 0).
+        """
         self.data = data
         self.affected_rows = affected_rows
 
     def __bool__(self) -> bool:
-        """Return True if there is data."""
+        """
+        Indicates whether the QueryResult contains any rows.
+        
+        Returns:
+            `true` if the result contains at least one row, `false` otherwise.
+        """
         return bool(self.data)
 
     def __len__(self) -> int:
-        """Return the number of rows."""
+        """
+        Number of rows in the QueryResult.
+        
+        Returns:
+            int: The number of rows in the result data.
+        """
         return len(self.data)
 
     def first(self) -> Optional[Dict]:
-        """Return the first row or None."""
+        """
+        Get the first row from the result set.
+        
+        Returns:
+            row (Optional[Dict]): The first row as a dict, or None if no rows are available.
+        """
         return self.data[0] if self.data else None
 
     def last(self) -> Optional[Dict]:
-        """Return the last row or None."""
+        """
+        Get the last row from the result set.
+        
+        Returns:
+            last_row (dict | None): The last row dictionary if available, otherwise `None`.
+        """
         return self.data[-1] if self.data else None
 
 
@@ -158,7 +185,12 @@ class ForeignKeyReference:
     field: str = "id"
 
     def __str__(self) -> str:
-        """String representation of the reference."""
+        """
+        Return the dotted foreign key reference in the form "modelname.field".
+        
+        Returns:
+            str: The reference formatted as "<model_name_lower>.<field>".
+        """
         return f"{self.model.__name__.lower()}.{self.field}"
 
 
