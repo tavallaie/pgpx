@@ -5,6 +5,7 @@ This module contains tests for database connection management
 including context managers and persistent connections.
 """
 
+import os
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -12,18 +13,27 @@ from src.pgpx.connection import DatabaseConnection, DatabaseClient
 from src.pgpx.exceptions import ConnectionError
 
 
+def get_test_connection_params():
+    """Get test connection parameters from environment variables.
+
+    Returns:
+        Dictionary with connection parameters
+    """
+    return {
+        "host": os.getenv("PGPX_TEST_HOST", "localhost"),
+        "port": int(os.getenv("PGPX_TEST_PORT", "5432")),
+        "user": os.getenv("PGPX_TEST_USER", "postgres"),
+        "password": os.getenv("PGPX_TEST_PASSWORD", "postgres"),
+        "dbname": os.getenv("PGPX_TEST_DB", "postgres"),
+    }
+
+
 class TestDatabaseConnectionMocked(unittest.TestCase):
     """Test DatabaseConnection class with mocked psycopg."""
 
     def setUp(self):
         """Set up test fixtures."""
-        self.connection_params = {
-            "host": "localhost",
-            "port": 5432,
-            "user": "postgres",
-            "password": "postgres",
-            "dbname": "postgres",
-        }
+        self.connection_params = get_test_connection_params()
 
     def test_init(self):
         """Test DatabaseConnection initialization."""
@@ -31,7 +41,6 @@ class TestDatabaseConnectionMocked(unittest.TestCase):
 
         self.assertEqual(conn.connection_params, self.connection_params)
         self.assertIsNone(conn._connection)
-        self.assertIsNone(conn._transaction_manager)
 
     def test_normalize_params_dict(self):
         """Test parameter normalization with dict."""
@@ -199,20 +208,13 @@ class TestDatabaseClientMocked(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures."""
-        self.connection_params = {
-            "host": "localhost",
-            "port": 5432,
-            "user": "postgres",
-            "password": "postgres",
-            "dbname": "postgres",
-        }
+        self.connection_params = get_test_connection_params()
 
     @patch("src.pgpx.connection.DatabaseConnection.connect")
     def test_init_auto_connect(self, mock_connect):
         """Test DatabaseClient initialization with auto_connect."""
         client = DatabaseClient(self.connection_params, auto_connect=True)
 
-        self.assertEqual(client.connection_params, self.connection_params)
         self.assertIsInstance(client._connection, DatabaseConnection)
         mock_connect.assert_called_once()
 
@@ -221,15 +223,8 @@ class TestDatabaseClientMocked(unittest.TestCase):
         """Test DatabaseClient initialization without auto_connect."""
         client = DatabaseClient(self.connection_params, auto_connect=False)
 
-        self.assertEqual(client.connection_params, self.connection_params)
         self.assertIsInstance(client._connection, DatabaseConnection)
         mock_connect.assert_not_called()
-
-    def test_connection_property(self):
-        """Test connection property."""
-        client = DatabaseClient(self.connection_params, auto_connect=False)
-
-        self.assertEqual(client.connection, client._connection)
 
     @patch("src.pgpx.connection.DatabaseConnection.is_connected")
     @patch("src.pgpx.connection.DatabaseConnection.connect")
@@ -283,11 +278,12 @@ class TestDatabaseClientMocked(unittest.TestCase):
             self.assertEqual(context, client)
             mock_connect.assert_called_once()
 
-    @patch("src.pgpx.connection.DatabaseConnection.connect")
     @patch("src.pgpx.connection.DatabaseConnection")
     def test_context_manager_no_disconnect(self, MockDatabaseConnection):
         """Test context manager doesn't disconnect on exit."""
         mock_instance = MockDatabaseConnection.return_value
+        mock_instance.is_connected.return_value = False
+
         client = DatabaseClient(self.connection_params, auto_connect=False)
 
         with client:
@@ -296,6 +292,7 @@ class TestDatabaseClientMocked(unittest.TestCase):
         # connect should be called but disconnect should not
         mock_instance.connect.assert_called_once()
         mock_instance.disconnect.assert_not_called()
+
     def test_repr(self):
         """Test string representation."""
         client = DatabaseClient(self.connection_params, auto_connect=False)
@@ -314,13 +311,7 @@ class TestDatabaseConnectionReal(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures."""
-        self.connection_params = {
-            "host": "localhost",
-            "port": 5432,
-            "user": "postgres",
-            "password": "postgres",
-            "dbname": "postgres",
-        }
+        self.connection_params = get_test_connection_params()
 
     def test_real_connection(self):
         """Test real connection to PostgreSQL."""
@@ -400,13 +391,7 @@ class TestDatabaseClientReal(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures."""
-        self.connection_params = {
-            "host": "localhost",
-            "port": 5432,
-            "user": "postgres",
-            "password": "postgres",
-            "dbname": "postgres",
-        }
+        self.connection_params = get_test_connection_params()
 
     def test_real_client_auto_connect(self):
         """Test real client with auto_connect."""
@@ -416,7 +401,7 @@ class TestDatabaseClientReal(unittest.TestCase):
         self.assertTrue(client.is_connected())
 
         # Test simple query
-        with client.connection.connection.cursor() as cursor:
+        with client.connection.cursor() as cursor:
             cursor.execute("SELECT 1 as test")
             result = cursor.fetchone()
             self.assertEqual(result[0], 1)
@@ -437,7 +422,7 @@ class TestDatabaseClientReal(unittest.TestCase):
         self.assertTrue(client.is_connected())
 
         # Test simple query
-        with client.connection.connection.cursor() as cursor:
+        with client.connection.cursor() as cursor:
             cursor.execute("SELECT 1 as test")
             result = cursor.fetchone()
             self.assertEqual(result[0], 1)
@@ -455,7 +440,7 @@ class TestDatabaseClientReal(unittest.TestCase):
             self.assertTrue(client.is_connected())
 
             # Test simple query
-            with client.connection.connection.cursor() as cursor:
+            with client.connection.cursor() as cursor:
                 cursor.execute("SELECT version()")
                 result = cursor.fetchone()
                 self.assertIn("PostgreSQL", result[0])
@@ -472,13 +457,13 @@ class TestDatabaseClientReal(unittest.TestCase):
         client = DatabaseClient(self.connection_params, auto_connect=True)
 
         # First operation
-        with client.connection.connection.cursor() as cursor:
+        with client.connection.cursor() as cursor:
             cursor.execute("SELECT 1 as first")
             result = cursor.fetchone()
             self.assertEqual(result[0], 1)
 
         # Second operation (should use same connection)
-        with client.connection.connection.cursor() as cursor:
+        with client.connection.cursor() as cursor:
             cursor.execute("SELECT 2 as second")
             result = cursor.fetchone()
             self.assertEqual(result[0], 2)

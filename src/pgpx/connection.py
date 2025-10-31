@@ -6,10 +6,14 @@ with support for context managers and persistent connections.
 """
 
 import psycopg
+import logging
 from typing import Any, Dict
 
 from .exceptions import ConnectionError
 from .types import ConnectionParams
+
+# Set up logging
+logger = logging.getLogger(__name__)
 
 
 class DatabaseConnection:
@@ -23,7 +27,6 @@ class DatabaseConnection:
         """
         self.connection_params = self._normalize_params(connection_params)
         self._connection = None
-        self._transaction_manager = None
 
     def _normalize_params(self, params: ConnectionParams) -> Dict[str, Any]:
         """Normalize connection parameters to dictionary format.
@@ -58,13 +61,13 @@ class DatabaseConnection:
         if self._connection:
             try:
                 self._connection.close()
-            except Exception:
-                pass  # Ignore errors during cleanup
+            except Exception as e:
+                logger.warning(f"Error closing connection: {e}")
             finally:
                 self._connection = None
 
     @property
-    def connection(self):
+    def connection(self) -> "psycopg.Connection":
         """Get the underlying psycopg connection.
 
         Returns:
@@ -93,13 +96,13 @@ class DatabaseConnection:
         """
         return self.connect()
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(self, _exc_type, _exc_val, _exc_tb) -> None:
         """Context manager exit with cleanup.
 
         Args:
-            exc_type: Exception type
-            exc_val: Exception value
-            exc_tb: Exception traceback
+            _exc_type: Exception type (unused)
+            _exc_val: Exception value (unused)
+            _exc_tb: Exception traceback (unused)
         """
         self.disconnect()
 
@@ -123,20 +126,22 @@ class DatabaseClient:
             connection_params: Database connection configuration
             auto_connect: Whether to connect immediately
         """
-        self.connection_params = connection_params
         self._connection = DatabaseConnection(connection_params)
 
         if auto_connect:
             self._connection.connect()
 
     @property
-    def connection(self) -> DatabaseConnection:
-        """Get the underlying connection.
+    def connection(self) -> "psycopg.Connection":
+        """Get the underlying psycopg connection.
 
         Returns:
-            The DatabaseConnection instance
+            The psycopg connection object
+
+        Raises:
+            ConnectionError: If not connected
         """
-        return self._connection
+        return self._connection.connection
 
     def connect(self) -> "DatabaseClient":
         """Connect to the database.
@@ -169,13 +174,13 @@ class DatabaseClient:
         self.connect()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(self, _exc_type, _exc_val, _exc_tb) -> None:
         """Context manager exit with cleanup.
 
         Args:
-            exc_type: Exception type
-            exc_val: Exception value
-            exc_tb: Exception traceback
+            _exc_type: Exception type (unused)
+            _exc_val: Exception value (unused)
+            _exc_tb: Exception traceback (unused)
         """
         # Don't disconnect by default to allow reuse
         pass
