@@ -6,9 +6,7 @@ and dataclasses defined in the types module.
 """
 
 import unittest
-import unittest
 
-from src.pgpx.types import (
 
 from src.pgpx.types import (
     # Enums
