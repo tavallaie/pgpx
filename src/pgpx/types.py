@@ -6,7 +6,7 @@ used throughout the pgpx library for type safety and clarity.
 """
 
 from enum import Enum
-from typing import Any, Dict, List, Optional, Type, TypeVar, Union, Callable, Set
+from typing import Any, Dict, List, Optional, Type, TypeVar, Callable, Set
 from dataclasses import dataclass
 
 # Generic type variable for model classes
@@ -186,9 +186,7 @@ class ForeignKeyInfo:
 
 
 # Type aliases for better readability
-ConnectionParams = Union[
-    Dict[str, Any], Dict[str, Any]
-]  # Changed from "DatabaseConfig"
+ConnectionParams = Dict[str, Any]
 FieldMetadata = Dict[str, Any]
 RowData = Dict[str, Any]
 MigrationFunction = Callable[[], None]
