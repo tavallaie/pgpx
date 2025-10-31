@@ -244,7 +244,7 @@ class TestDataclasses(unittest.TestCase):
     def test_relationship_info(self):
         """
         Verify RelationshipInfo dataclass stores provided values and uses expected defaults.
-        
+
         Asserts that explicit fields (name, related_model, foreign_key, back_populates, lazy, cascade) are preserved when provided, and that omitted optional fields default to back_populates = None, lazy = True, and cascade = None.
         """
 
@@ -331,7 +331,7 @@ class TestTypeAliases(unittest.TestCase):
         def up_migration():
             """
             Apply the upward database migration.
-            
+
             Performs the schema and/or data changes required to move the database to the next migration version.
             """
             pass
