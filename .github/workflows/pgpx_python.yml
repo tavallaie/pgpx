@@ -1,4 +1,4 @@
-name: pgmq-python CI workflow
+name: pgpx-python CI workflow
 
 defaults:
   run:
@@ -10,7 +10,7 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/pgmq_python.yml"
+      - ".github/workflows/pgpx_python.yml"
       - "src/**"
       - "tests/**"
       - "pyproject.toml"
@@ -18,7 +18,7 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/pgmq_python.yml"
+      - ".github/workflows/pgpx_python.yml"
       - "src/**"
       - "tests/**"
       - "pyproject.toml"
@@ -58,7 +58,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     # only publish off main branch
-    if: github.repository == 'pgmq/pgmq-py' && github.ref == 'refs/heads/main'
+    if: github.repository == 'tavallaie/pgpx' && github.ref == 'refs/heads/main'
     permissions:
       id-token: write
       contents: read
