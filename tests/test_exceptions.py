@@ -119,7 +119,11 @@ class TestPrimaryKeyError(unittest.TestCase):
         self.assertTrue(issubclass(PrimaryKeyError, SchemaError))
 
     def test_primary_key_error_instantiation(self):
-        """Test PrimaryKeyError can be instantiated."""
+        """
+        Verify PrimaryKeyError instantiates and preserves the provided message.
+        
+        Asserts that the exception's string representation equals the message passed at construction.
+        """
         from src.pgpx.exceptions import PrimaryKeyError
 
         error = PrimaryKeyError("Primary key violation")
